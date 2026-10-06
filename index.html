@@ -45,14 +45,14 @@ th{position:sticky;top:0;background:var(--card);font-weight:500}
 <body>
 <main>
 <h1 id="hero"></h1>
-<p class="lead">Perbandingan usability Instagram dan TikTok dari 50 responden berusia 18–35 tahun, diukur dengan System Usability Scale (SUS). Data berasal dari Tabel 3 dan 4 jurnal Suryawati dan Putra (JATI, Vol. 9 No. 4, 2025).</p>
+<p class="lead">Perbandingan usability Instagram dan TikTok dari 50 responden yang berusia 18–35 tahun, dan diukur dengan System Usability Scale (SUS). Data yang digunakan berasal dari Tabel 3 dan 4 yang terdapat pada jurnal Suryawati dan Putra (JATI, Vol. 9 No. 4, 2025).</p>
 <section id="s-scale"><h2>Posisi pada skala SUS</h2><div class="scale" id="scale"></div><div class="txt" id="t-scale"></div></section>
 <div id="secs"></div>
 <section><h2>Kesimpulan akhir</h2><div class="txt" id="final"></div></section>
 <section><h2>Data mentah</h2>
 <div class="tabs" role="group" aria-label="Pilih aplikasi"><button data-k="ig" aria-pressed="true">Instagram</button><button data-k="tt" aria-pressed="false">TikTok</button></div>
 <div class="tw"><table id="tbl"></table></div>
-<p class="note">Q1–Q10 adalah skor kontribusi 0–4 (butir ganjil: skala dikurangi 1; butir genap: 5 dikurangi skala). Skor SUS = jumlah × 2,5. Uji-t dihitung dengan asumsi satu baris sama dengan satu responden, yang tidak dinyatakan eksplisit di jurnal.</p></section>
+<p class="note">Q1–Q10 adalah pertanyaan dengan skor kontribusi 0–4 perbutir (pada butir ganjil di hitung dengan skala dikurangi 1; sedangkan pada butir genap di hitung dengan 5 dikurangi skala). Skor SUS di hitung dengan mengalikan jumlah dengan 2,5 (jumlah × 2,5). Uji-t dihitung dengan asumsi satu baris sama dengan satu responden, yang tidak dinyatakan eksplisit di jurnal.</p></section>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
@@ -74,17 +74,17 @@ const g=(h,a,b)=>sum(h.slice(a,b));
 const cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const IG=cv('--ig'),TT=cv('--tt'),MU=cv('--mu'),LN=cv('--line');
 Chart.defaults.color=MU;Chart.defaults.font.family='"IBM Plex Sans",sans-serif';Chart.defaults.borderColor=LN;
-document.getElementById('hero').innerHTML=`TikTok <span class="tt">${f(T.mean)}</span> melawan Instagram <span class="ig">${f(I.mean)}</span>: sama-sama nyaman, selisihnya tipis`;
+document.getElementById('hero').innerHTML=`Perbandingan TikTok Dengan Skor <span class="tt">${f(T.mean)}</span> Dan Instagram Dengan Skor <span class="ig">${f(I.mean)}</span> Dua Platform, Satu Tingkat Kenyamanan`;
 // skala
 const bands=[[0,51,'#D64550','F · Awful','< 51'],[51,68,'#F28C38','D · Poor','51–67'],[68,80.3,'#F2C94C','B · Good','68–80,3'],[80.3,100,'#4CAF73','A · Excellent','> 80,3']];
 document.getElementById('scale').innerHTML=`<div class="bands">${bands.map(b=>`<div style="width:${b[1]-b[0]}%;background:${b[2]}"><b>${b[3]}</b><span>${b[4]}</span></div>`).join('')}</div>
 <div class="mk u" style="left:${I.mean}%;border-color:var(--ig);color:var(--ig)"><span>Instagram ${f(I.mean)}</span></div>
 <div class="mk d" style="left:${T.mean}%;border-color:var(--tt);color:var(--tt)"><span>TikTok ${f(T.mean)}</span></div>`;
 const kb=(e,k)=>`<p>${e}</p><p class="k"><b>Kesimpulan.</b> ${k}</p>`;
-document.getElementById('t-scale').innerHTML=kb(`Skala ini menempatkan skor rata-rata kedua aplikasi pada pembagian grade SUS. Instagram (${f(I.mean)}) dan TikTok (${f(T.mean)}) sama-sama jatuh di pita kuning Grade B (Good), hanya sedikit di bawah batas Grade A pada 80,3.`,`Dengan jarak hanya ${f(T.mean-I.mean,2)} poin, keduanya masuk kategori Acceptable. TikTok nyaris menyentuh Grade A, tetapi belum melewatinya.`);
+document.getElementById('t-scale').innerHTML=kb(`Skala ini menempatkan skor rata-rata kedua aplikasi pada pembagian grade SUS. Instagram (${f(I.mean)}) dan TikTok (${f(T.mean)}) sama-sama berada di posisi kotak kuning Grade B (Good), hanya sedikit terpaut di bawah batas Grade A pada 80,3.`,`Dengan jarak hanya ${f(T.mean-I.mean,2)} poin, keduanya masuk kedalam kategori Acceptable. Dengan skor tersebut TikTok nyaris menyentuh Grade A.`);
 // bagian lain
 const SEC=[
-['Rata-rata skor SUS','Batang rata-rata skor SUS',`Diagram ini membandingkan rata-rata skor SUS dari 50 responden untuk tiap aplikasi. TikTok memperoleh ${f(T.mean)} dan Instagram ${f(I.mean)}, sehingga TikTok unggul sekitar ${f(T.mean-I.mean,2)} poin. Sebagai pembanding, rata-rata industri berada di angka 68 dan batas Grade A di 80,3.`,`TikTok memang sedikit lebih mudah digunakan, tetapi jaraknya tipis. Keduanya sama-sama berada di Grade B (Good) dan melampaui rata-rata industri, jadi kedua aplikasi tergolong nyaman dipakai.`],
+['Rata-rata skor SUS','Batang rata-rata skor SUS',`Diagram ini membandingkan rata-rata skor SUS dari 50 responden untuk tiap aplikasi. TikTok mendapatkan skor ${f(T.mean)} sedangkan Instagram mendapatkan skor ${f(I.mean)}, sehingga TikTok lebih unggul sekitar ${f(T.mean-I.mean,2)} poin. Sebagai pembanding, rata-rata industri berada di angka 68 dan batas Grade A di 80,3.`,`TikTok memang sedikit lebih mudah digunakan, tetapi jaraknya tipis. Keduanya sama-sama berada di Grade B (Good) dan melampaui rata-rata industri, jadi kedua aplikasi tergolong nyaman dipakai.`],
 ['Sebaran skor (boxplot)','Boxplot skor SUS',`Boxplot menunjukkan seberapa jauh skor responden menyebar, bukan hanya nilai rata-ratanya. Median TikTok ${f(T.med,2)} dan Instagram ${f(I.med,2)}, dengan skor terendah ${f(T.min)} untuk TikTok dan ${f(I.min,0)} untuk Instagram. Titik kecil mewakili tiap responden, dan belah ketupat menandai rata-rata.`,`Kotak kedua aplikasi saling menimpa cukup lebar dan standar deviasinya besar (${f(T.sd)} dan ${f(I.sd)}). Artinya selisih dua poin tadi tertutup oleh perbedaan antarresponden, sehingga belum bisa dianggap perbedaan yang tegas.`],
 ['Distribusi skor responden','Histogram skor SUS',`Histogram mengelompokkan responden menurut rentang skor. Di TikTok, ${g(T.hist,3,6)} dari 50 responden berskor 70 ke atas, termasuk ${T.hist[5]} orang di rentang 90–100. Instagram punya ${g(I.hist,3,6)} responden di rentang itu, tetapi ${I.hist[2]} orang masih berskor 60–69, jauh lebih banyak daripada TikTok yang hanya ${T.hist[2]} orang.`,`Penilaian pengguna TikTok cenderung menumpuk di skor tinggi, sedangkan penilaian Instagram lebih tersebar ke bawah. Pola ini sejalan dengan rata-rata TikTok yang sedikit lebih besar.`],
 ['Distribusi grade','Batang bertumpuk jumlah responden per grade',`Setiap skor SUS diubah menjadi grade A sampai F. Di TikTok, ${T.grades[0]} responden masuk Grade A dan ${T.grades[1]} Grade B. Di Instagram, ${I.grades[0]} responden masuk Grade A dan ${I.grades[1]} Grade B. Perbedaan paling kentara ada di Grade D: ${I.grades[3]} responden Instagram dibandingkan ${T.grades[3]} responden TikTok.`,`Sebagian besar responden puas dengan kedua aplikasi (Grade A–B: TikTok ${T.grades[0]+T.grades[1]}/50, Instagram ${I.grades[0]+I.grades[1]}/50). Namun TikTok juga punya sedikit lebih banyak Grade F (${T.grades[4]} vs ${I.grades[4]}), jadi pengalamannya tidak seragam bagi semua pengguna.`],

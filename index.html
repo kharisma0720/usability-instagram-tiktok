@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Usability Instagram vs TikTok (SUS)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+:root{--bg:#F5F7FA;--card:#fff;--ink:#14213D;--mu:#5B6475;--line:#DDE2EA;--ig:#C13584;--tt:#0B8A96;--k:#E4F3F4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1524;--card:#171E31;--ink:#E8ECF4;--mu:#9AA4B8;--line:#2A334A;--ig:#E05AA6;--tt:#2CC4D2;--k:#12303A}}
+:root[data-theme="dark"]{--bg:#0F1524;--card:#171E31;--ink:#E8ECF4;--mu:#9AA4B8;--line:#2A334A;--ig:#E05AA6;--tt:#2CC4D2;--k:#12303A}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:32px 20px 64px}
+h1,h2{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(30px,6vw,52px);font-weight:800;letter-spacing:-.02em;max-width:18em}
+h2{font-size:clamp(22px,3.5vw,30px);font-weight:600;margin-bottom:18px}
+.ig{color:var(--ig)}.tt{color:var(--tt)}
+.lead{color:var(--mu);max-width:42em;margin:14px 0 36px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;margin-top:22px}
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:center}
+.fig{position:relative;height:300px;min-width:0}
+.txt p{margin:0 0 14px;max-width:34em}
+.k{border-left:4px solid var(--tt);background:var(--k);padding:12px 16px;border-radius:0 8px 8px 0;margin:0}
+.scale{position:relative;margin:64px 0 70px}
+.bands{display:flex;height:64px;border-radius:8px;overflow:hidden}
+.bands div{display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:13px;color:#14213D;line-height:1.25;text-align:center;border-right:2px solid var(--card)}
+.mk{position:absolute;width:0;border-left:3px solid;transform:translateX(-1.5px)}
+.mk span{position:absolute;white-space:nowrap;transform:translateX(-50%);font:800 18px "Bricolage Grotesque",sans-serif}
+.mk.u{bottom:100%;height:30px;top:auto;margin-bottom:-0px}.mk.u span{bottom:100%;margin-bottom:4px}
+.mk.d{top:100%;height:30px}.mk.d span{top:100%;margin-top:4px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button{font:500 15px "IBM Plex Sans",sans-serif;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:8px 16px;border-radius:8px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.tabs button:focus-visible{outline:3px solid var(--tt);outline-offset:2px}
+.tw{overflow-x:auto;max-height:420px;overflow-y:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--line)}
+th{position:sticky;top:0;background:var(--card);font-weight:500}
+.note{color:var(--mu);font-size:14px;margin-top:12px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.fig{height:260px}section{padding:18px}}
+</style>
+</head>
+<body>
+<main>
+<h1 id="hero"></h1>
+<p class="lead">Perbandingan usability Instagram dan TikTok dari 50 responden berusia 18–35 tahun, diukur dengan System Usability Scale (SUS). Data berasal dari Tabel 3 dan 4 jurnal Suryawati dan Putra (JATI, Vol. 9 No. 4, 2025).</p>
+<section id="s-scale"><h2>Posisi pada skala SUS</h2><div class="scale" id="scale"></div><div class="txt" id="t-scale"></div></section>
+<div id="secs"></div>
+<section><h2>Kesimpulan akhir</h2><div class="txt" id="final"></div></section>
+<section><h2>Data mentah</h2>
+<div class="tabs" role="group" aria-label="Pilih aplikasi"><button data-k="ig" aria-pressed="true">Instagram</button><button data-k="tt" aria-pressed="false">TikTok</button></div>
+<div class="tw"><table id="tbl"></table></div>
+<p class="note">Q1–Q10 adalah skor kontribusi 0–4 (butir ganjil: skala dikurangi 1; butir genap: 5 dikurangi skala). Skor SUS = jumlah × 2,5. Uji-t dihitung dengan asumsi satu baris sama dengan satu responden, yang tidak dinyatakan eksplisit di jurnal.</p></section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const CODES={ig:"3144423444 3333323331 4431321332 3333333331 4444444443 4444323342 4343333333 4444443444 4434344434 4343344344 4444444444 4333333323 4133223333 4433322333 0222222222 0444422400 4344433441 4434333333 4334344334 4343333433 3334321333 3334313333 4344323333 4333233233 2334323323 4444424442 4334213433 4330323333 3444333443 0444434443 4444333342 2334323333 4334433443 2222222122 3141313331 4444444343 4332223332 3333323332 3344433331 3344322333 4343323331 4444343434 4441434333 4442424443 4333333333 4444442442 3233431331 4441424444 3324233312 4343333331",
+tt:"4444444444 3333324444 4444334433 3333333331 4444444443 4344223343 4344434344 4433444433 4434444434 3442444343 4444444444 4444433333 4444323334 4443322333 3444334433 2442222400 4444333433 4444033444 3334343434 4443333344 3334321333 1444322443 4334223334 4443434443 2334323323 4444424444 4344334433 4333223332 3444443434 0440434343 3333333332 3334333322 4331001113 2222222222 4443313331 4444444444 4443334323 3133323333 4444334434 3234322333 4333323331 0233313211 2344434444 4443424343 3333333333 0444404413 2333333332 4334433044 3333332332 4333333333"};
+const D={},sc={},S={};
+const sum=a=>a.reduce((x,y)=>x+y,0),mean=a=>sum(a)/a.length;
+const sd=a=>{const m=mean(a);return Math.sqrt(sum(a.map(x=>(x-m)**2))/(a.length-1))};
+const qt=(a,p)=>{const s=[...a].sort((x,y)=>x-y),i=(s.length-1)*p,l=Math.floor(i);return s[l]+(s[Math.min(l+1,49)]-s[l])*(i-l)};
+const f=(n,k=1)=>n.toFixed(k).replace('.',',');
+const grade=s=>s>80.3?0:s>68?1:s===68?2:s>=51?3:4;
+const BINS=[[40,50],[50,60],[60,70],[70,80],[80,90],[90,101]];
+for(const k of['ig','tt']){D[k]=CODES[k].split(' ').map(s=>[...s].map(Number));sc[k]=D[k].map(r=>sum(r)*2.5);const a=D[k],s=sc[k];
+ S[k]={mean:mean(s),sd:sd(s),med:qt(s,.5),min:Math.min(...s),max:Math.max(...s),hist:BINS.map(([l,h])=>s.filter(x=>x>=l&&x<h).length),grades:[0,1,2,3,4].map(g=>s.filter(x=>grade(x)===g).length),
+ q:[...Array(10)].map((_,j)=>mean(a.map(r=>r[j]))),learn:mean(a.map(r=>(r[3]+r[9])/8*100)),usab:mean(a.map(r=>(sum(r)-r[3]-r[9])/32*100))}}
+const I=S.ig,T=S.tt,diff=sc.tt.map((v,i)=>v-sc.ig[i]),pos=diff.filter(x=>x>0).length,neg=diff.filter(x=>x<0).length,eq=50-pos-neg,dm=mean(diff);
+const P_PAIR='0,312',P_WELCH='0,423';
+const g=(h,a,b)=>sum(h.slice(a,b));
+const cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const IG=cv('--ig'),TT=cv('--tt'),MU=cv('--mu'),LN=cv('--line');
+Chart.defaults.color=MU;Chart.defaults.font.family='"IBM Plex Sans",sans-serif';Chart.defaults.borderColor=LN;
+document.getElementById('hero').innerHTML=`TikTok <span class="tt">${f(T.mean)}</span> melawan Instagram <span class="ig">${f(I.mean)}</span>: sama-sama nyaman, selisihnya tipis`;
+// skala
+const bands=[[0,51,'#D64550','F · Awful','< 51'],[51,68,'#F28C38','D · Poor','51–67'],[68,80.3,'#F2C94C','B · Good','68–80,3'],[80.3,100,'#4CAF73','A · Excellent','> 80,3']];
+document.getElementById('scale').innerHTML=`<div class="bands">${bands.map(b=>`<div style="width:${b[1]-b[0]}%;background:${b[2]}"><b>${b[3]}</b><span>${b[4]}</span></div>`).join('')}</div>
+<div class="mk u" style="left:${I.mean}%;border-color:var(--ig);color:var(--ig)"><span>Instagram ${f(I.mean)}</span></div>
+<div class="mk d" style="left:${T.mean}%;border-color:var(--tt);color:var(--tt)"><span>TikTok ${f(T.mean)}</span></div>`;
+const kb=(e,k)=>`<p>${e}</p><p class="k"><b>Kesimpulan.</b> ${k}</p>`;
+document.getElementById('t-scale').innerHTML=kb(`Skala ini menempatkan skor rata-rata kedua aplikasi pada pembagian grade SUS. Instagram (${f(I.mean)}) dan TikTok (${f(T.mean)}) sama-sama jatuh di pita kuning Grade B (Good), hanya sedikit di bawah batas Grade A pada 80,3.`,`Dengan jarak hanya ${f(T.mean-I.mean,2)} poin, keduanya masuk kategori Acceptable. TikTok nyaris menyentuh Grade A, tetapi belum melewatinya.`);
+// bagian lain
+const SEC=[
+['Rata-rata skor SUS','Batang rata-rata skor SUS',`Diagram ini membandingkan rata-rata skor SUS dari 50 responden untuk tiap aplikasi. TikTok memperoleh ${f(T.mean)} dan Instagram ${f(I.mean)}, sehingga TikTok unggul sekitar ${f(T.mean-I.mean,2)} poin. Sebagai pembanding, rata-rata industri berada di angka 68 dan batas Grade A di 80,3.`,`TikTok memang sedikit lebih mudah digunakan, tetapi jaraknya tipis. Keduanya sama-sama berada di Grade B (Good) dan melampaui rata-rata industri, jadi kedua aplikasi tergolong nyaman dipakai.`],
+['Sebaran skor (boxplot)','Boxplot skor SUS',`Boxplot menunjukkan seberapa jauh skor responden menyebar, bukan hanya nilai rata-ratanya. Median TikTok ${f(T.med,2)} dan Instagram ${f(I.med,2)}, dengan skor terendah ${f(T.min)} untuk TikTok dan ${f(I.min,0)} untuk Instagram. Titik kecil mewakili tiap responden, dan belah ketupat menandai rata-rata.`,`Kotak kedua aplikasi saling menimpa cukup lebar dan standar deviasinya besar (${f(T.sd)} dan ${f(I.sd)}). Artinya selisih dua poin tadi tertutup oleh perbedaan antarresponden, sehingga belum bisa dianggap perbedaan yang tegas.`],
+['Distribusi skor responden','Histogram skor SUS',`Histogram mengelompokkan responden menurut rentang skor. Di TikTok, ${g(T.hist,3,6)} dari 50 responden berskor 70 ke atas, termasuk ${T.hist[5]} orang di rentang 90–100. Instagram punya ${g(I.hist,3,6)} responden di rentang itu, tetapi ${I.hist[2]} orang masih berskor 60–69, jauh lebih banyak daripada TikTok yang hanya ${T.hist[2]} orang.`,`Penilaian pengguna TikTok cenderung menumpuk di skor tinggi, sedangkan penilaian Instagram lebih tersebar ke bawah. Pola ini sejalan dengan rata-rata TikTok yang sedikit lebih besar.`],
+['Distribusi grade','Batang bertumpuk jumlah responden per grade',`Setiap skor SUS diubah menjadi grade A sampai F. Di TikTok, ${T.grades[0]} responden masuk Grade A dan ${T.grades[1]} Grade B. Di Instagram, ${I.grades[0]} responden masuk Grade A dan ${I.grades[1]} Grade B. Perbedaan paling kentara ada di Grade D: ${I.grades[3]} responden Instagram dibandingkan ${T.grades[3]} responden TikTok.`,`Sebagian besar responden puas dengan kedua aplikasi (Grade A–B: TikTok ${T.grades[0]+T.grades[1]}/50, Instagram ${I.grades[0]+I.grades[1]}/50). Namun TikTok juga punya sedikit lebih banyak Grade F (${T.grades[4]} vs ${I.grades[4]}), jadi pengalamannya tidak seragam bagi semua pengguna.`],
+['Skor per butir pertanyaan','Batang rata-rata per butir Q1 sampai Q10',`Diagram ini memecah skor SUS ke sepuluh butir pertanyaan dengan skala 0–4, dan nilai lebih tinggi berarti lebih baik. Kedua aplikasi hampir selalu berdampingan dengan selisih kecil. TikTok paling unggul pada Q10 (+${f(T.q[9]-I.q[9],2)}), yaitu kebutuhan membiasakan diri, sedangkan Instagram sedikit lebih baik pada Q1 (${f(T.q[0]-I.q[0],2)}), yaitu keinginan memakai lagi.`,`Keunggulan TikTok paling terasa pada kemudahan untuk dipelajari, bukan pada fitur atau konsistensi. Di butir-butir lain, kedua aplikasi nyaris sama.`],
+['Learnability dan usability','Batang aspek learnability dan usability',`Butir SUS dikelompokkan menjadi learnability (Q4 dan Q10) dan usability (delapan butir lainnya), masing-masing diubah ke skala 0–100. Pada learnability, TikTok mencapai ${f(T.learn)} dan Instagram ${f(I.learn)}. Pada usability, angkanya hampir sama: ${f(T.usab)} untuk TikTok dan ${f(I.usab)} untuk Instagram.`,`Perbedaan kedua aplikasi sebenarnya terletak pada seberapa cepat pengguna belajar memakainya. Setelah dikuasai, kenyamanan keduanya hampir setara.`],
+['Selisih per responden','Batang selisih skor TikTok dikurangi Instagram',`Diagram ini menghitung selisih skor TikTok dikurangi Instagram untuk tiap responden, dengan asumsi satu baris sama dengan satu orang. Batang hijau-biru berarti TikTok lebih tinggi dan batang merah muda berarti Instagram lebih tinggi. TikTok unggul pada ${pos} responden, Instagram pada ${neg}, dan ${eq} responden memberi skor sama.`,`Meski TikTok unggul pada lebih banyak responden, uji-t berpasangan (p = ${P_PAIR}) dan uji Welch (p = ${P_WELCH}) menunjukkan selisih ini belum signifikan secara statistik. Jadi unggulnya TikTok lebih tepat dibaca sebagai kecenderungan.`]];
+document.getElementById('secs').innerHTML=SEC.map((s,i)=>`<section><h2>${s[0]}</h2><div class="grid"><div class="fig">${i==1?'<div id="box" role="img" aria-label="'+s[1]+'"></div>':'<canvas id="c'+i+'" role="img" aria-label="'+s[1]+'"></canvas>'}</div><div class="txt">${kb(s[2],s[3])}</div></div></section>`).join('');
+const mk=(i,type,labels,ds,o={})=>new Chart(document.getElementById('c'+i),{type,data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${f(c.parsed.y??c.parsed.x,2)}`}}},...o}});
+const two=(a,b)=>[{label:'Instagram',data:a,backgroundColor:IG},{label:'TikTok',data:b,backgroundColor:TT}];
+const Y=(max,t)=>({scales:{y:{min:0,max,title:{display:!!t,text:t}}}});
+mk(0,'bar',['Skor SUS rata-rata'],two([+I.mean.toFixed(2)],[+T.mean.toFixed(2)]),Y(100));
+mk(2,'bar',BINS.map(b=>b[0]+'–'+Math.min(b[1]-1,100)),two(I.hist,T.hist),Y(20,'Jumlah responden'));
+const GC=['#4CAF73','#9BD17F','#F2C94C','#F28C38','#D64550'],GL=['A (Excellent)','B (Good)','C (OK)','D (Poor)','F (Awful)'];
+mk(3,'bar',['Instagram','TikTok'],GL.map((l,i)=>({label:l,data:[I.grades[i],T.grades[i]],backgroundColor:GC[i]})),{indexAxis:'y',scales:{x:{stacked:true,title:{display:true,text:'Jumlah responden'}},y:{stacked:true}},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.x} responden`}}}});
+mk(4,'bar',[...Array(10)].map((_,j)=>'Q'+(j+1)),two(I.q.map(v=>+v.toFixed(2)),T.q.map(v=>+v.toFixed(2))),Y(4));
+mk(5,'bar',['Learnability (Q4, Q10)','Usability (8 butir lain)'],two([+I.learn.toFixed(1),+I.usab.toFixed(1)],[+T.learn.toFixed(1),+T.usab.toFixed(1)]),Y(100));
+mk(6,'bar',diff.map((_,i)=>i+1),[{label:'TikTok − Instagram',data:diff,backgroundColor:diff.map(d=>d>=0?TT:IG)}],{plugins:{legend:{display:false},tooltip:{callbacks:{title:c=>'Responden '+c[0].label,label:c=>' Selisih: '+f(c.parsed.y,1)+' poin'}}},scales:{x:{ticks:{maxTicksLimit:10},title:{display:true,text:'Responden ke-'}},y:{title:{display:true,text:'Selisih skor'}}}});
+// boxplot SVG
+(()=>{const Yp=v=>270-(v-30)/75*250;let h=`<svg viewBox="0 0 400 300" width="100%" height="100%" style="font:12px 'IBM Plex Sans',sans-serif">`;
+[40,60,80,100].forEach(v=>h+=`<line x1="40" x2="390" y1="${Yp(v)}" y2="${Yp(v)}" stroke="var(--line)"/><text x="34" y="${Yp(v)+4}" text-anchor="end" fill="var(--mu)">${v}</text>`);
+[[68,'68'],[80.3,'80,3']].forEach(([v,l])=>h+=`<line x1="40" x2="390" y1="${Yp(v)}" y2="${Yp(v)}" stroke="var(--mu)" stroke-dasharray="5 4"/><text x="388" y="${Yp(v)+(v==68?14:-4)}" text-anchor="end" fill="var(--mu)">${l}</text>`);
+[['ig',130,'var(--ig)','Instagram'],['tt',280,'var(--tt)','TikTok']].forEach(([k,x,c,n])=>{const s=sc[k],q1=qt(s,.25),q3=qt(s,.75),m=qt(s,.5),mn=Math.min(...s),mx=Math.max(...s);
+h+=`<line x1="${x}" x2="${x}" y1="${Yp(mn)}" y2="${Yp(mx)}" stroke="${c}" stroke-width="2"/><rect x="${x-34}" y="${Yp(q3)}" width="68" height="${Yp(q1)-Yp(q3)}" fill="${c}" fill-opacity=".8" stroke="${c}"/><line x1="${x-34}" x2="${x+34}" y1="${Yp(m)}" y2="${Yp(m)}" stroke="var(--ink)" stroke-width="3"/>`;
+s.forEach((v,i)=>h+=`<circle cx="${x+((i*37)%100-50)*.6}" cy="${Yp(v)}" r="2.2" fill="var(--ink)" fill-opacity=".35"/>`);
+const my=Yp(mean(s));h+=`<path d="M${x} ${my-6}L${x+6} ${my}L${x} ${my+6}L${x-6} ${my}Z" fill="var(--card)" stroke="var(--ink)" stroke-width="1.5"/><text x="${x}" y="292" text-anchor="middle" fill="var(--ink)" font-size="14">${n}</text>`});
+document.getElementById('box').innerHTML=h+'</svg>';})();
+document.getElementById('final').innerHTML=`<p>Secara keseluruhan, TikTok memperoleh skor SUS ${f(T.mean)} dan Instagram ${f(I.mean)}. Keduanya masuk Grade B (Good) dan tergolong Acceptable, sehingga kedua aplikasi dinilai mudah digunakan oleh responden.</p><p>TikTok memang unggul tipis sebesar ${f(dm,2)} poin, terutama pada aspek learnability (${f(T.learn)} vs ${f(I.learn)}). Namun selisih ini belum signifikan secara statistik (p = ${P_PAIR}), sehingga lebih tepat disebut kecenderungan daripada perbedaan yang pasti.</p><p>Penelitian lanjutan dengan sampel lebih besar dan metode pendamping seperti UEQ atau PSSUQ akan membantu memperkuat temuan ini.</p>`;
+// tabel
+const GN='ABCDF';
+function tbl(k){document.getElementById('tbl').innerHTML=`<thead><tr><th>No</th>${[...Array(10)].map((_,j)=>`<th>Q${j+1}</th>`).join('')}<th>Jumlah</th><th>Skor SUS</th><th>Grade</th></tr></thead><tbody>${D[k].map((r,i)=>`<tr><td>${i+1}</td>${r.map(v=>`<td>${v}</td>`).join('')}<td>${sum(r)}</td><td>${f(sc[k][i],1)}</td><td>${GN[grade(sc[k][i])]}</td></tr>`).join('')}<tr><th colspan="11">Rata-rata</th><th>${f(mean(D[k].map(sum)),1)}</th><th>${f(S[k].mean,2)}</th><th></th></tr></tbody>`}
+tbl('ig');
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));tbl(b.dataset.k)});
+</script>
+</body>
+</html>
